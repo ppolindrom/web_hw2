@@ -1,7 +1,6 @@
 from django.urls import path
 from .views import contacts, IndexView, ProductDetailView, blog_list_view
 
-app_name = 'blog'
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
