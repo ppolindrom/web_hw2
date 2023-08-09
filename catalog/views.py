@@ -1,9 +1,23 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Product
+from blog.models import Blog
+from catalog.models import Product
 
-def index(request):
-    products = Product.objects.all()
-    return render(request, 'catalog/index.html', {'products': products})
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views import View
+
+
+class IndexView(View):
+    template_name = 'catalog/index.html'
+
+    def get(self, request):
+        products = Product.objects.all()
+        return render(request, self.template_name, {'products': products})
+
+class ProductDetailView(View):
+    template_name = 'catalog/product_detail.html'
+
+    def get(self, request, product_id):
+        product = get_object_or_404(Product, pk=product_id)
+        return render(request, self.template_name, {'product': product})
 
 
 def contacts(request):
@@ -15,7 +29,7 @@ def contacts(request):
         print(f'{name} ({email}): {message}')
     return render(request, 'catalog/contacts.html')
 
-def product_detail(request, product_id):
-    # Получаем информацию о товаре по его ID
-    product = get_object_or_404(Product, pk=product_id)
-    return render(request, 'catalog/product_detail.html', {'product': product})
+def blog_list_view(request):
+    blogs = Blog.objects.all()
+    return render(request, 'blog/list.html', {'blogs': blogs})
+
