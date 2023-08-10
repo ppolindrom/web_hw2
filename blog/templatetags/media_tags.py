@@ -1,5 +1,5 @@
 from django import template
-from ..models import Blog  # Подставьте свою модель Blog
+from ..models import Blog
 
 register = template.Library()
 
