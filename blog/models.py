@@ -12,7 +12,7 @@ class Blog(models.Model):
     views_count = models.IntegerField(default=0, verbose_name='просмотры')
 
     def __str__(self):
-        return f'{self.title}, {self.description}, {self.views}'
+        return f'{self.title}, {self.description}'
 
     class Meta:
         verbose_name = "блог"
