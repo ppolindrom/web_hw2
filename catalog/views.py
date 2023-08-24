@@ -1,6 +1,6 @@
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from blog.models import Blog
 from catalog.forms import ProductForm, VersionForm
@@ -17,12 +17,18 @@ class IndexView(View):
         products = Product.objects.all()
         return render(request, self.template_name, {'products': products})
 
+
 class ProductDetailView(View):
     template_name = 'catalog/product_detail.html'
 
     def get(self, request, product_id):
         product = get_object_or_404(Product, pk=product_id)
         return render(request, self.template_name, {'product': product})
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('index')
 
 
 def contacts(request):

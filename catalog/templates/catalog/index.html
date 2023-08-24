@@ -21,6 +21,7 @@
             <p class="card-text">{{ product.text|truncatechars:100 }}</p>
             <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Купить</a>
             <a href="{% url 'update_product' product.id %}" class="btn btn-primary">Редактировать</a>
+            <a href="{% url 'delete' product.id %}" class="btn btn-primary">Удалить</a>
           </div>
         </div>
       </div>
