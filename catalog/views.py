@@ -1,4 +1,8 @@
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView
+
 from blog.models import Blog
+from catalog.forms import ProductForm
 from catalog.models import Product
 
 from django.shortcuts import get_object_or_404, redirect, render
@@ -32,4 +36,17 @@ def contacts(request):
 def blog_list_view(request):
     blogs = Blog.objects.all()
     return render(request, 'blog/list.html', {'blogs': blogs})
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('index')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('index')
+
 
