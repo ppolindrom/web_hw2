@@ -38,3 +38,18 @@ class Category(models.Model):
         verbose_name = 'кетегория'  # Настройка для наименования одного объекта
         verbose_name_plural = 'категории'
         ordering = ('title',)
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='продукт')
+    version_number = models.CharField(max_length=100, verbose_name='номер версии')
+    version_name = models.CharField(max_length=100, verbose_name='название версии')
+    is_current_version = models.BooleanField(default=False, verbose_name='признак текущей версии')
+
+    def __str__(self):
+        return f'{self.product}, {self.version_name}, {self.version_number}'
+
+    class Meta:
+        verbose_name = "версия"
+        verbose_name_plural = "версии"
+

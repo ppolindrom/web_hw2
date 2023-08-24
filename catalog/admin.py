@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Category, Product
+from .models import Category, Product, Version
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'title','text')
@@ -9,6 +11,14 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'price', 'category')
     list_filter = ('category',)  # Добавляем фильтр по категории
     search_fields = ('title', 'text',)  # Поля для поиска по названию и описанию
+
+@admin.register(Version)
+class VersionAdmin(admin.ModelAdmin):
+    list_display = ('product', 'version_number', 'version_name', 'is_current_version')
+    list_filter = ('product',)
+    search_fields = ('version_number', 'version_name',)
+
+
 
 # admin.site.register(Category, CategoryAdmin)
 # admin.site.register(Product, ProductAdmin)
