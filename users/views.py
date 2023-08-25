@@ -3,6 +3,7 @@ from django.views.generic import CreateView, UpdateView
 
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
+from decouple import config
 
 
 class RegisterView(CreateView):
