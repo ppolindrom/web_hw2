@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'users',
 ]
 
+SITE_ID = 1
+SITE_NAME = "127.0.0.1:8000"
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -141,9 +144,10 @@ AUTH_USER_MODEL = "users.User"
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 
-EMAIL_HOST = "smtp.gmail.com"
+
+EMAIL_USE_SSL = True
+EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 
