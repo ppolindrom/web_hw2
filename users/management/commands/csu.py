@@ -6,7 +6,7 @@ class Command(BaseCommand):
     """Команда для создания суперюзера"""
     def handle(self, *args, **options):
         user = User.objects.create(
-            email="admin@gmail.com",
+            email="admin@sky.pro",
             first_name="admin",
             last_name="admin",
             is_superuser=True,

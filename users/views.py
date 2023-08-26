@@ -11,10 +11,12 @@ from django.urls import reverse_lazy, reverse
 import config.settings
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
-from users.services import sendmail
+# from users.services import sendmail
 from django.shortcuts import redirect
 from django.contrib.auth import login
 from decouple import config
+
+from users.test import send_mail
 
 
 class LoginView(BaseLoginView):
@@ -36,17 +38,23 @@ class RegisterView(CreateView):
     title = "Регистрация нового пользователя"
 
     def form_valid(self, form):
+        print('я запустился')
         user = form.save()
         user.is_active = False
         user.save()
+        print('я создаю токен')
         token = default_token_generator.make_token(user)
+        print('создал токен')
         uid = urlsafe_base64_encode(force_bytes(user.pk))
+        print('скоро создам активейд урл')
         activation_url = reverse_lazy('users:confirm_email', kwargs={'uidb64': uid, 'token': token})
-        current_site = config.settings.SITE_NAME
-        sendmail(
-            user.email,
-            "Регистрация на сайте!",
-            f"Подтвердите свой адрес электронной почты. Перейдите по ссылке: http://{current_site}{activation_url}"
+        print('скоро создам кьюрент файл')
+        current_site = '127.0.0.1:8000'
+        print(user.email)
+        send_mail(
+            to= user.email,
+            theme="Регистрация на сайте!",
+            message = f"Подтвердите свой адрес электронной почты. Перейдите по ссылке: http://{current_site}{activation_url}"
         )
         return redirect('users:email_confirmation_sent')
 
@@ -93,11 +101,12 @@ class UserUpdateView(UpdateView):
 
 def generate_password(request):
     """Сгенерировать новый пароль для пользователя"""
+    print('функция генерации')
     new_password = "".join([str(random.randint(0, 9)) for _ in range(12)])
-    sendmail(request.user.email, "Changed password on site", new_password)
+    send_mail(request.user.email, "Changed password on site", new_password)
     request.user.set_password(new_password)
     request.user.save()
-    return redirect(reverse("catalog:index_page"))
+    return redirect(reverse("index"))
 
 
 class UserResetView(PasswordResetView):
