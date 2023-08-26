@@ -6,9 +6,6 @@ from users.views import LoginView, LogoutView, RegisterView, UserUpdateView, gen
 app_name = "users"
 
 
-
-
-
 urlpatterns = [
 
     path("", LoginView.as_view(), name="login"),
