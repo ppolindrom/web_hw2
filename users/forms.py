@@ -5,14 +5,12 @@ from django import forms
 
 
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
-
     class Meta:
         model = User
         fields = ["email", "phone", "country", "avatar", "password1", "password2"]
 
 
 class UserProfileForm(StyleFormMixin, UserChangeForm):
-
     class Meta:
         model = User
         fields = ["email", "password", "first_name", "last_name", "phone", "country", "avatar"]
@@ -22,5 +20,3 @@ class UserProfileForm(StyleFormMixin, UserChangeForm):
 
         self.fields['password'].widget = forms.HiddenInput()
 
-class ResetPasswordForm(forms.Form):
-    email = forms.EmailField(label="Email", max_length=254, widget=forms.EmailInput(attrs={'class': 'form-control'}))
