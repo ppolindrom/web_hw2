@@ -3,7 +3,7 @@ from users.models import User
 
 
 class Command(BaseCommand):
-
+    """Команда для создания суперюзера"""
     def handle(self, *args, **options):
         user = User.objects.create(
             email="admin@gmail.com",
