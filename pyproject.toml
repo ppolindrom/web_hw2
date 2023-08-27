@@ -10,6 +10,8 @@ packages = [{include = "web_hw2"}]
 python = "^3.11"
 python-slugify = "^8.0.1"
 pytils = "^0.4.1"
+textfile = "^0.1.5"
+you = "^0.5.0.dev1"
 
 
 [build-system]

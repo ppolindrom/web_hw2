@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +41,11 @@ INSTALLED_APPS = [
 
     'catalog',
     'blog',
+    'users',
 ]
+
+SITE_ID = 1
+SITE_NAME = "127.0.0.1:8000"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -134,3 +139,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+AUTH_USER_MODEL = "users.User"
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL = True
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_HOST_USER = 'polinaskypro@yandex.ru'
+EMAIL_HOST_PASSWORD = 'zqwlgljcjdgrdggd'
+EMAIL_PORT = 465
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER

@@ -50,14 +50,19 @@ class ProductCreateView(CreateView):
     form_class = ProductForm
     success_url = reverse_lazy('index')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.owner = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
+
+
 
 class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('index')
-
-    def get_success_url(self):
-        return reverse('index', args=[self.kwargs.get('pk')])
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
