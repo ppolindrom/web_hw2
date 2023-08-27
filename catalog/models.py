@@ -1,13 +1,11 @@
 from django.db import models
-from django.utils.text import slugify
-
-
-
+from django.conf import settings
 
 NULLABLE = {'blank': True, 'null': True}  # константа для необязательного поля
 
 
 class Product(models.Model):
+    """Модель продукта"""
     title = models.CharField(max_length=150, verbose_name='наименование')
     text = models.TextField(max_length=10000, verbose_name='описание')
     image = models.ImageField(verbose_name='изображение', blank=True, null=True)
@@ -15,6 +13,8 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='цена', blank=True, null=True)
     date_creation = models.DateTimeField(verbose_name='дата создания', auto_now_add=True)
     date_change = models.DateTimeField(verbose_name='дата изменений', auto_now=True)
+
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name='владелец', **NULLABLE)
 
 
     def __str__(self):
@@ -26,7 +26,9 @@ class Product(models.Model):
         verbose_name_plural = 'продукты'
         ordering = ('title',)
 
+
 class Category(models.Model):
+    """Модель категории"""
     title = models.CharField(max_length=150, verbose_name='наименование')
     text = models.TextField(max_length=10000, verbose_name='описание')
 
@@ -41,6 +43,7 @@ class Category(models.Model):
 
 
 class Version(models.Model):
+    """Модель версии"""
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='продукт')
     version_number = models.CharField(max_length=100, verbose_name='номер версии')
     version_name = models.CharField(max_length=100, verbose_name='название версии')
