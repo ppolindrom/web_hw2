@@ -19,7 +19,7 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ('owner', )
+        exclude = ('owner', 'status', )
 
     def clean(self):
 
@@ -41,3 +41,7 @@ class VersionForm(StyleFormMixin, forms.ModelForm):
         model = Version
         fields = "__all__"
 
+class ProductModerForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('text', 'category', 'status',)

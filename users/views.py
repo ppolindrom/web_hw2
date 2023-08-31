@@ -1,4 +1,7 @@
 import random
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView as BaseLoginView, PasswordResetDoneView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
@@ -81,7 +84,7 @@ class UserConfirmedView(TemplateView):
     title = "Your email is activated."
 
 
-class UserUpdateView(UpdateView):
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     """Профиль пользователя """
     model = User
     success_url = reverse_lazy("users:profile")
@@ -91,7 +94,7 @@ class UserUpdateView(UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
-
+@login_required
 def generate_password(request):
     """Сгенерировать новый пароль для пользователя по желанию"""
     print('я запустилась')
@@ -101,6 +104,7 @@ def generate_password(request):
     request.user.set_password(new_password)
     request.user.save()
     return redirect(reverse("index"))
+
 
 def password_reset(request):
     """Сгенерировать новый пароль для пользователя если пароль забыли"""

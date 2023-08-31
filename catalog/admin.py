@@ -8,8 +8,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'price', 'category')
-    list_filter = ('category',)  # Добавляем фильтр по категории
+    list_display = ('id', 'title', 'price', 'category', 'status')
+    list_filter = ('category', 'status')  # Добавляем фильтр по категории
     search_fields = ('title', 'text',)  # Поля для поиска по названию и описанию
 
 @admin.register(Version)

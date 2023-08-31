@@ -6,6 +6,15 @@ NULLABLE = {'blank': True, 'null': True}  # константа для необя
 
 class Product(models.Model):
     """Модель продукта"""
+    STATUS_CREATED = 'created'
+    STATUS_MODERATED = 'moderated'
+    STATUS_PUBLISH = 'published'
+    STATUSES = (
+        (STATUS_CREATED, 'Добавлен'),
+        (STATUS_MODERATED, 'На модерации'),
+        (STATUS_PUBLISH, 'Опубликован'),
+    )
+
     title = models.CharField(max_length=150, verbose_name='наименование')
     text = models.TextField(max_length=10000, verbose_name='описание')
     image = models.ImageField(verbose_name='изображение', blank=True, null=True)
@@ -15,6 +24,7 @@ class Product(models.Model):
     date_change = models.DateTimeField(verbose_name='дата изменений', auto_now=True)
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name='владелец', **NULLABLE)
+    status = models.CharField(max_length=20, choices=STATUSES, default=STATUS_MODERATED, verbose_name='статус')
 
 
     def __str__(self):
@@ -25,6 +35,11 @@ class Product(models.Model):
         verbose_name = 'продукт'  # Настройка для наименования одного объекта
         verbose_name_plural = 'продукты'
         ordering = ('title',)
+        permissions = [
+            ('set_product_status', 'Can change the status of products'),
+            ('change_product_description', 'Can change product description'),
+            ('change_product_category', 'Can change product category'),
+        ]
 
 
 class Category(models.Model):
